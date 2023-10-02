@@ -56,7 +56,7 @@ def display_energy_overview_tab(regions_data, filtered_data, energy_type, start_
         )
         sub_col1, sub_col2, sub_col3 = st.columns([0.4, 0.35, 0.15])
         with sub_col2:
-            st.selectbox("Choose Time Aggregation:", ("Yearly", "Monthly"), key="time_interval")
+            st.selectbox("Choose Time Aggregation:", ("Yearly", "Monthly"), key="time_interval", label_visibility='hidden')
             
     # Removing columns ending with '_millions' and displaying the table
     cols_to_drop = [col for col in regions_data.columns if col.endswith("_millions")]
@@ -96,16 +96,30 @@ def display_specific_energy_tab(regions_data, filtered_data_by_energy, energy_ty
         sub_col1, sub_col2 = st.columns([0.48, 0.52])
         with sub_col1:
             st.selectbox(
-                "Choose Time Aggregation:", ("Yearly", "Monthly"), key="time_interval"
+                "Choose Time Aggregation:", ("Yearly", "Monthly"), key="time_interval", label_visibility='hidden'
             )
         st.write(regions_data)
 
+
+def adjust_selectbox_position():
+    """ Adjusts the positioning of the selectbox by applying custom CSS. """
+    st.markdown(
+        """
+        <style>
+        [data-baseweb="select"] {
+            margin-top: -70px;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
 
 def main():
     """
     Main function to load data, display sidebar, and render selected energy type tab.
     """
     st.set_page_config(layout="wide")
+    adjust_selectbox_position()
 
     # Loading and formatting the data
     dataset = pd.read_csv("data/France_Region_Auction_Data.csv")
@@ -117,15 +131,23 @@ def main():
     regions_data = compute_regional_energy_statistics(filtered_data)
 
     # Creating a dropdown for energy type selection and displaying the corresponding tab
-    selected_energy_type = st.selectbox("Choose an Energy Type:", ["All Energy Types", "Onshore Wind", "Hydropower", "Solar", "Geothermal"])
+    st.subheader('Choose an Energy Type:')
+    st.write('')
+    st.write('')
+    selected_energy_type = st.selectbox("Choose an Energy Type:", ["All Energy Types", "Onshore Wind", "Hydropower", "Solar", "Geothermal"], label_visibility='hidden')
     if selected_energy_type == "All Energy Types":
         st.title("All Energy Types: Onshore Wind, Hydropower, Solar, and Geothermal")
         display_energy_overview_tab(regions_data, filtered_data, "All Renewables", start_date, end_date)
     else:
         st.title(selected_energy_type)
+        st.write('')
+        st.write('')
+        st.write('')
         filtered_data_by_energy = filter_dataframe_by_energy_type(filtered_data, selected_energy_type)
         display_specific_energy_tab(regions_data, filtered_data_by_energy, selected_energy_type, start_date, end_date, key=selected_energy_type)
 
 if __name__ == "__main__":
     main()
+
+
 

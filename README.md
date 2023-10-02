@@ -1,62 +1,34 @@
-# Renewable Electricity Production Visualization App
+# Renewable Electricity Production App
 
-This project visualizes the production of electricity of renewable origin competing in the auctions for Origin Guarantees (GO) at the level of electricity distribution and transmission networks in France. It provides comprehensive insights into the dynamics of renewable energy production, focusing on energy types such as Onshore Wind, Hydropower, Solar, and Geothermal. The visualizations are created with Python using Streamlit and Plotly for interactive and expressive charts.
+Explore interactive visualizations of renewable electricity production in France using this app.<br> Access it [here](https://pradie-corentin-renewable-electricity-app.streamlit.app/).
 
-## Dataset Description
+## Overview
 
-The dataset used for this application is sourced from [data.gouv.fr](https://www.data.gouv.fr/fr/datasets/productions-delectricite-dorigine-renouvelable-aux-encheres-des-garanties-dorigine/).
+This app provides insights into renewable electricity production across various regions and sectors in France. It displays data related to renewable energy installations participating in the auctions for Origin Guarantees (GO), focused on the transmission and distribution networks of electricity.
 
-### Overview
+### Data Source and Description
 
-The dataset presents, by region and sector, the productions of renewable origin electricity that compete in the auctions for Origin Guarantees (GO) at the level of electricity distribution and transmission networks.
+The app utilizes a dataset from [data.gouv.fr](https://www.data.gouv.fr/fr/datasets/productions-delectricite-dorigine-renouvelable-aux-encheres-des-garanties-dorigine/), presenting details about renewable electricity produced from installations with a capacity greater than 100 kW. These installations benefit from support mechanisms such as obligatory purchase or supplemental remuneration.
 
-### Details
+The Obligations of Renewable Energy (ORE) Agency, mandated by Distribution System Operators (DSOs), provides a monthly updated database of the installations participating in the auctions for Origin Guarantees since March 2019. This database contains the net monthly production values injected into the network, updated by co-contractors and supplemented by DSOs within two months following a production month.
 
-- **Target:** Renewable electricity production installations with installed capacity greater than 100 kW.
-- **Scope:** Installations benefiting from a support mechanism of either obligatory purchase or supplemental remuneration.
-- **Time Frame:** Since March 2019.
-- **Update Frequency:** Monthly.
-- **Data Providers:** The ORE Agency and the DSOs.
+For more information about the dataset, you can refer to the [official dataset description](https://www.data.gouv.fr/fr/datasets/productions-delectricite-dorigine-renouvelable-aux-encheres-des-garanties-dorigine/).
 
-#### Data Process
+## Features
 
-Since March 2019, the DSOs mandate the ORE Agency to make available to the entity responsible for conducting the auctions, a database of the concerned installations. This database is updated monthly by the co-contractors and supplemented by the DSOs within 2 months following a month of production of the value of the net monthly production injected into the network.
+The app offers a user-friendly interface with various interactive features:
+- **Data Filters**: Customize views based on date ranges, regions, and energy types.
+- **Interactive Visualizations**: Explore data through interactive bar charts, pie charts, combined charts, and geographical maps that represent renewable electricity production details concisely and clearly.
 
-## App Features
+## Technologies
 
-1. **Interactive Filters**: Enables users to filter data based on date ranges, regions, and energy types, providing a tailored view of the data.
-2. **Dynamic Visualizations**: Offers a variety of charts such as bar, pie, and maps, allowing users to discern patterns and trends in renewable energy production.
-3. **Responsive Design**: Adapts to different screen sizes, ensuring accessibility from various devices.
-4. **User-friendly Interface**: Provides a clean and intuitive interface for seamless navigation through different features and visualizations.
-
-## How to Use
-
-Navigate through different tabs to explore various visualizations and insights. Utilize the sidebar options to filter the data as per your requirements, and interact with the visualizations for a more in-depth understanding.
-
-### Note
-
-Ensure you have all the necessary libraries installed and the required dataset is in the correct path to run the application seamlessly.
-
-## Libraries Used
-
-- Streamlit
-- Plotly
-- Pandas
-- Folium
-
-## Developer Notes
-
-This app aims to provide an analytical view of the renewable electricity production data, helping stakeholders, researchers, and enthusiasts to draw meaningful conclusions and insights from the renewable energy sector in France.
-
-### Contributions
-
-Contributions, bug reports, and improvements are welcome. Please refer to the project’s style and contribution guidelines for submitting patches and additions.
+- **Streamlit**: To build the web application with Python.
+- **Plotly**: For creating interactive and responsive plots.
+- **Folium**: To create dynamic maps.
+- **Pandas**: Employed for data manipulation and analysis.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is open source, under the MIT License. For more details, see the [LICENSE](LICENSE) file.
 
-## Acknowledgments
-
-We would like to acknowledge [data.gouv.fr](https://www.data.gouv.fr/fr/datasets/productions-delectricite-dorigine-renouvelable-aux-encheres-des-garanties-dorigine/) for providing the dataset used in this project.
-
+Thank you for your interest in this project! Dive in, interact, and gain insights into renewable electricity production in France [here](https://pradie-corentin-renewable-electricity-app.streamlit.app/).

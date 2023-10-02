@@ -32,22 +32,7 @@ def initialize_map():
 def select_map_type(energy_type):
     """ Renders a selection box for map type if the energy_type is not 'All Renewables'. """
     if energy_type != "All Renewables":
-        adjust_selectbox_position()
-        st.selectbox("", ["Pourcentage in the Renewables", "Volume Sold"], key="map_type")
-
-
-def adjust_selectbox_position():
-    """ Adjusts the positioning of the selectbox by applying custom CSS. """
-    st.markdown(
-        """
-        <style>
-        [data-baseweb="select"] {
-            margin-top: -50px;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
+        st.selectbox("Visualization Type", ["Pourcentage in the Renewables", "Volume Sold"], key="map_type", label_visibility='hidden')
 
 
 def configure_map_settings(energy_type):
