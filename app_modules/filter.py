@@ -1,6 +1,7 @@
 import pandas as pd
 import streamlit as st
 
+
 def filter_dataframe_by_date(df, start_date, end_date):
     """
     Filters a DataFrame to include only rows where the 'date' column is within the specified date range.
@@ -26,7 +27,7 @@ def filter_dataframe_by_region(df, region):
         region (str): The target region to filter by.
 
     Returns:
-        pd.DataFrame: If 'All Regions' is selected, returns the original DataFrame; 
+        pd.DataFrame: If 'All Regions' is selected, returns the original DataFrame;
                       otherwise, returns a DataFrame consisting only of rows where the 'region' column matches the specified region.
     """
     return df if region == "All Regions" else df[df["region"] == region]
@@ -41,7 +42,7 @@ def filter_dataframe_by_energy_type(df, energy_type):
         energy_type (str): The target energy type to filter by.
 
     Returns:
-        pd.DataFrame: If an empty string is provided for energy_type, returns the original DataFrame; 
+        pd.DataFrame: If an empty string is provided for energy_type, returns the original DataFrame;
                       otherwise, returns a DataFrame consisting only of rows where the 'energy_type' column matches the specified energy type.
     """
     return df if energy_type == "" else df[df["energy_type"] == energy_type]
@@ -63,7 +64,9 @@ def compute_regional_energy_statistics(filtered_df):
         .agg(total_volume=("total_volume_sold", "sum"))
         .reset_index()
     )
-    total_volume_df["total_volume_millions"] = total_volume_df["total_volume"] / 1_000_000
+    total_volume_df["total_volume_millions"] = (
+        total_volume_df["total_volume"] / 1_000_000
+    )
 
     # Iterate over each unique energy type and merge the corresponding aggregated data into the regions_df DataFrame
     regions_df = total_volume_df
@@ -74,7 +77,9 @@ def compute_regional_energy_statistics(filtered_df):
             .agg(**{f"{energy_type}_total_volume": ("total_volume_sold", "sum")})
             .reset_index()
         )
-        grouped_df[f"{energy_type}_total_volume_millions"] = grouped_df[f"{energy_type}_total_volume"] / 1_000_000
+        grouped_df[f"{energy_type}_total_volume_millions"] = (
+            grouped_df[f"{energy_type}_total_volume"] / 1_000_000
+        )
         grouped_df[f"{energy_type}_percentage"] = (
             grouped_df[f"{energy_type}_total_volume"] / regions_df["total_volume"]
         ) * 100

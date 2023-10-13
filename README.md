@@ -1,34 +1,55 @@
 # Renewable Electricity Production App
 
-Explore interactive visualizations of renewable electricity production in France using this app.<br> Access it [here](https://pradie-corentin-renewable-electricity-app.streamlit.app/).
+Immerse yourself in an interactive exploration of renewable electricity production in France through this app. Dive into the visual explorations [here](https://pradie-corentin-renewable-electricity-app.streamlit.app/).
 
-## Overview
+## Introduction
 
-This app provides insights into renewable electricity production across various regions and sectors in France. It displays data related to renewable energy installations participating in the auctions for Origin Guarantees (GO), focused on the transmission and distribution networks of electricity.
+The Renewable Electricity Production App invites users to explore, analyze, and visualize comprehensive data related to renewable electricity production across various regions in France. The data highlights the evolution and contributions of different renewable energy types, providing users a detailed overview of France's renewable energy landscape.
 
-### Data Source and Description
+### Data Source and Insights
 
-The app utilizes a dataset from [data.gouv.fr](https://www.data.gouv.fr/fr/datasets/productions-delectricite-dorigine-renouvelable-aux-encheres-des-garanties-dorigine/), presenting details about renewable electricity produced from installations with a capacity greater than 100 kW. These installations benefit from support mechanisms such as obligatory purchase or supplemental remuneration.
+The data is sourced from [data.gouv.fr](https://www.data.gouv.fr/fr/datasets/productions-delectricite-dorigine-renouvelable-aux-encheres-des-garanties-dorigine/), detailing renewable electricity production from installations with a capacity exceeding 100 kW. These installations, benefitting from support mechanisms such as obligatory purchase or supplemental remuneration, are pivotal contributors to the renewable energy matrix in France.
 
-The Obligations of Renewable Energy (ORE) Agency, mandated by Distribution System Operators (DSOs), provides a monthly updated database of the installations participating in the auctions for Origin Guarantees since March 2019. This database contains the net monthly production values injected into the network, updated by co-contractors and supplemented by DSOs within two months following a production month.
+Detailed monthly production values, updated by co-contractors and supplemented by Distribution System Operators (DSOs) within two months following a production month, furnish the dataset. For a thorough understanding of the dataset, visit the [official dataset description](https://www.data.gouv.fr/fr/datasets/productions-delectricite-dorigine-renouvelable-aux-encheres-des-garanties-dorigine/).
 
-For more information about the dataset, you can refer to the [official dataset description](https://www.data.gouv.fr/fr/datasets/productions-delectricite-dorigine-renouvelable-aux-encheres-des-garanties-dorigine/).
+### Insights You Can Gain
 
-## Features
+#### Regional Insights
+- Visualize and comprehend which regions in France are dominant in renewable electricity production and explore the predominant energy types in different geographical areas.
 
-The app offers a user-friendly interface with various interactive features:
-- **Data Filters**: Customize views based on date ranges, regions, and energy types.
-- **Interactive Visualizations**: Explore data through interactive bar charts, pie charts, combined charts, and geographical maps that represent renewable electricity production details concisely and clearly.
+#### Energy Type Insights
+- Identify the dominant energy types in various regions and examine their production trends and fluctuations over specified periods.
 
-## Technologies
+#### Time Series Analysis
+- Uncover how renewable energy production varies across different seasons and identify patterns, trends, or anomalies in the data.
 
-- **Streamlit**: To build the web application with Python.
-- **Plotly**: For creating interactive and responsive plots.
-- **Folium**: To create dynamic maps.
-- **Pandas**: Employed for data manipulation and analysis.
+#### Comparative Analysis
+- Analyze and compare the proportions of different energy types within a region and across various regions, understanding the dependencies and variations in renewable energy production.
+
+#### Statistical Insights
+- Gain a numerical and statistical perspective on energy production, understanding the exact volumes and percentages associated with different energy types and regions.
+
+#### Custom Analysis
+- Utilize the customizable filters to derive insights based on specific interests, such as focusing on a particular region, energy type, or timeframe.
+
+
+## Engaging Features
+
+Navigate through a suite of interactive and insightful features that offer a multifaceted view into the data:
+- **Data Customization**: Tailor your view with filters for date ranges, specific regions, and energy types.
+- **Interactive Visualizations**: Engage with dynamic bar charts, pie charts, combined charts, and geographical maps that vividly illustrate the various facets of renewable electricity production.
+- **Detailed Insights**: Access comprehensive statistical data and dive deep into the nuances of renewable energy production across different regions and energy types.
+- **User-friendly Interface**: An intuitive and easy-to-navigate UI ensures a smooth and enlightening user experience.
+
+## Technological Stack
+
+- **Streamlit**: Utilized to craft the web application with Python, ensuring a sleek and interactive UI.
+- **Plotly**: Deployed for developing interactive and user-responsive plots.
+- **Folium**: Integrated to produce dynamic and interactive maps.
+- **Pandas**: Applied for adept data manipulation and analysis.
 
 ## License
 
-This project is open source, under the MIT License. For more details, see the [LICENSE](LICENSE) file.
+This project is open-source and accessible under the MIT License. More details can be found in the [LICENSE](LICENSE) file.
 
-Thank you for your interest in this project! Dive in, interact, and gain insights into renewable electricity production in France [here](https://pradie-corentin-renewable-electricity-app.streamlit.app/).
+Thank you for exploring this project! Embark on your journey, interact with the visualizations, and unearth insights into the realm of renewable electricity production in France [here](https://pradie-corentin-renewable-electricity-app.streamlit.app/).
