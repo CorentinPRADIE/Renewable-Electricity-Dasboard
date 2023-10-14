@@ -23,7 +23,9 @@ from app_modules.filter import (
     compute_regional_energy_statistics,
 )
 
+# From app_modules/explanation.py
 from app_modules.explanation import (
+    WELCOME_MESSAGE,
     ALL_ENERGY_TAB_EXPLANATION,
     SPECIFIC_ENERGY_TAB_EXPLANATION,
 )
@@ -198,7 +200,7 @@ def display_specific_energy_tab(
             if col.startswith(energy_type)
         ]
         st.dataframe(regions_data.drop(cols_to_drop, axis=1)[energy_cols], height=458)
-    st.write("")
+    st.write('---')
     st.write(SPECIFIC_ENERGY_TAB_EXPLANATION.replace("[Energy Type]", energy_type))
 
 
@@ -230,26 +232,7 @@ def main():
         page_icon="🌎",
     )
     adjust_selectbox_position()
-    st.markdown(
-        """
-        ### Welcome to the Renewable Electricity App 🌎
-
-        Explore comprehensive insights into France's renewable electricity data, with a particular 
-        focus on four main energy types: Onshore Wind, Hydropower, Solar, and Geothermal. Navigate 
-        through the visualizations and interact with the data to uncover trends, correlations, and 
-        patterns in the energy landscape across different regions and timeframes.
-
-        #### How to Navigate:
-        - **Choose an Energy Type**: Select an energy type from the dropdown menu to explore specific visualizations and insights.
-        - **Sidebar Filters**: Utilize the date filter in the sidebar to view data within a specific timeframe.
-        - **Interactive Maps and Charts**: Hover over maps and charts for detailed data points, and click on map regions to refine your data view.
-        - **Detailed Insights**: Scroll down for detailed visual representations and statistics pertaining to your selected energy type and date range.
-
-        Dive into the wealth of data and explore the evolution of renewable energy in various regions across France. 
-        Whether you're interested in the general overview or specifics of each energy type, the dashboard is designed 
-        to cater to a wide spectrum of informational needs.
-        """
-    )
+    st.markdown(WELCOME_MESSAGE)
 
     # Loading and formatting the data
     dataset = pd.read_csv("data/France_Region_Auction_Data.csv")
@@ -270,12 +253,14 @@ def main():
         label_visibility="hidden",
     )
     if selected_energy_type == "All Energy Types":
+        st.write('---')
         st.title("All Energy Types: Onshore Wind, Hydropower, Solar, and Geothermal")
         display_energy_overview_tab(
             regions_data, filtered_data, "All Renewables", start_date, end_date
         )
     else:
-        st.title(selected_energy_type)
+        st.write('---')
+        st.title('Selected Energy Type : ' + selected_energy_type)
         st.write("")
         st.write("")
         st.write("")

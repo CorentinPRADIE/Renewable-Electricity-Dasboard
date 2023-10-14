@@ -1,5 +1,32 @@
 import streamlit as st
 
+WELCOME_MESSAGE = """
+        # Welcome to the Renewable Electricity App 🌎
+
+        Immerse yourself in a detailed exploration of renewable electricity production across France, 
+        focusing on four predominant energy types: Onshore Wind, Hydropower, Solar, and Geothermal. 
+        This app brings forth data derived from installations with a capacity greater than 100 kW, 
+        participating in the auctions for Origin Guarantees since March 2019. The data reveals the 
+        net monthly production values, updated by co-contractors and supplemented by Distribution System Operators (DSOs),
+        providing a comprehensive view of the renewable electricity landscape in France. You can access the original dataset [here](https://www.data.gouv.fr/fr/datasets/productions-delectricite-dorigine-renouvelable-aux-encheres-des-garanties-dorigine/).
+
+        ### How to Navigate:
+        - **Choose an Energy Type**: Begin your exploration by selecting an energy type from the dropdown menu, 
+          unlocking specific visualizations and insights tailored to your selection.
+        - **Sidebar Filters**: Employ the date filter in the sidebar to refine the data and visualizations, 
+          zeroing in on specific periods of interest.
+        - **Interactive Maps and Charts**: Engage with interactive maps and charts - hover for detailed data points 
+          and click on map regions to dive deeper into specific geographical data.
+        - **Detailed Insights**: Scroll through to unearth detailed visual representations and statistics 
+          correlating with your chosen energy type and date range.
+
+        Embark on a journey through the data, exploring the intricacies and evolution of renewable energy 
+        across various French regions. Whether your interest lies in a broad overview or in the nuanced specifics 
+        of each energy type, the dashboard is crafted to cater to a diverse array of informational needs.
+        """
+
+
+
 ALL_ENERGY_TAB_EXPLANATION = """
         ### How to Use the Energy Overview Tab
         **Welcome to the Energy Overview Tab!** Here, you can explore a comprehensive visual representation 

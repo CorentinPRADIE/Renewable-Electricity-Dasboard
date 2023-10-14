@@ -157,27 +157,31 @@ def create_energy_bar_chart(df, energy_type, time_interval):
     Returns:
         plotly.graph_objs.Figure: A bar chart figure visualizing the total volume sold over time.
     """
+    # Ensure DataFrame has a single unique energy type.
     if df["energy_type"].nunique() != 1:
         raise ValueError("DataFrame should have only one unique value in 'energy_type'")
-
-    grouped_df = df.groupby(["date", "energy_type"], as_index=False)[
-        "total_volume_sold"
-    ].sum()
-    grouped_df["date"] = pd.to_datetime(grouped_df["date"])
+    
+    df["date"] = pd.to_datetime(df["date"])
+    grouped_df = df.groupby(["date", "energy_type"], as_index=False)["total_volume_sold"].sum()
 
     if time_interval == "Yearly":
-        grouped_df.set_index("date", inplace=True)
-        grouped_df = grouped_df.resample("Y").sum()
-        grouped_df.reset_index(inplace=True)
+        # Extract the year directly from the "date" and group by it.
+        grouped_df["year"] = grouped_df["date"].dt.year
+        grouped_df = grouped_df.groupby("year", as_index=False)["total_volume_sold"].sum()
+        x_col = "year"
+    else:
+        x_col = "date"
 
     fig = px.bar(
         grouped_df,
-        x="date",
+        x=x_col,
         y="total_volume_sold",
         labels={"total_volume_sold": "Total Volume Sold"},
         title=f"Total Volume Sold Over Time for {energy_type} Energy",
     )
+    # Update trace colors using the predefined energy type colors.
     fig.update_traces(marker_color=ENERGY_TYPE_COLORS.get(energy_type, "grey"))
+
     return fig
 
 
