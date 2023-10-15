@@ -21,7 +21,7 @@ def display_map(regions_df, energy_type, start_date, end_date, key):
     choropleth.geojson.add_to(map)
 
     # Updating feature properties and attaching tooltips.
-    update_features(
+    update_tooltip(
         choropleth,
         regions_df,
         energy_type,
@@ -55,7 +55,7 @@ def select_map_type(energy_type):
     if energy_type != "All Renewables":
         st.selectbox(
             "Visualization Type",
-            ["Pourcentage in the Renewables", "Volume Sold"],
+            ["Volume Sold", "Pourcentage in the Renewables"],
             key="map_type",
             label_visibility="hidden",
         )
@@ -96,7 +96,7 @@ def create_choropleth(regions_df, column_to_display_as_color, energy_type):
     )
 
 
-def update_features(
+def update_tooltip(
     choropleth,
     regions_df,
     energy_type,

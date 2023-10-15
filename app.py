@@ -14,13 +14,13 @@ from app_modules.map import display_map
 # From app_modules/sidebar.py
 from app_modules.sidebar import display_date_filter_sidebar
 
-
 # From app_modules/filter.py
 from app_modules.filter import (
     filter_dataframe_by_date,
     filter_dataframe_by_energy_type,
     filter_dataframe_by_region,
     compute_regional_energy_statistics,
+    format_dataframe
 )
 
 # From app_modules/explanation.py
@@ -30,67 +30,11 @@ from app_modules.explanation import (
     SPECIFIC_ENERGY_TAB_EXPLANATION,
 )
 
+from app_modules.helpers import adjust_selectbox_position
 
-def format_volume(number):
-    """
-    Format the volume numbers to a readable format using 'k' for thousands and 'M' for millions.
-    Appends the Euro symbol at the end.
-
-    Args:
-    number (float or int): The number to format
-
-    Returns:
-    str: The formatted string
-    """
-    if abs(number) >= 1_000_000:  # Check for millions
-        return f"{number/1_000_000:.2f} M€"
-    elif abs(number) >= 1_000:  # Check for thousands
-        return f"{number/1_000:.2f} k€"
-    else:
-        return f"{number:.2f}€"
-
-
-def format_dataframe(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Format the dataframe columns: append a Euro sign for columns ending with "volume"
-    and a percentage sign for columns ending with "percentage".
-
-    Args:
-    df (pd.DataFrame): The input DataFrame
-
-    Returns:
-    pd.DataFrame: The formatted DataFrame
-    """
-    formatted_df = df.copy()
-
-    # Drop columns ending with "_millions"
-    cols_to_drop = [col for col in df.columns if col.endswith("_millions")]
-    formatted_df = formatted_df.drop(cols_to_drop, axis=1)
-
-    # Sort by total_volume
-    formatted_df = formatted_df.sort_values(
-        by="total_volume", ascending=False
-    ).reset_index(drop=True)
-
-    # Iterate through each column in the dataframe
-    for col in formatted_df.columns:
-        if col.endswith("_total_volume") or col == "total_volume":
-            # If column ends with "_total_volume" or is "total_volume", apply the format_volume function
-            formatted_df[col] = formatted_df[col].apply(format_volume)
-            # Rename the column to remove the suffix
-            formatted_df.rename(
-                columns={col: col.replace("_total_volume", "")}, inplace=True
-            )
-        elif col.endswith("_percentage"):
-            # If column ends with "_percentage", append percentage sign to each value
-            formatted_df[col] = formatted_df[col].apply(lambda x: f"{x:.2f}%")
-            # Rename the column to replace the suffix with ' %'
-            formatted_df.rename(
-                columns={col: col.replace("_percentage", " %")}, inplace=True
-            )
-
-    return formatted_df
-
+# --------------------------------------------
+# --       ALL ENERGY TYPE DISPLAY          --
+# --------------------------------------------
 
 def display_energy_overview_tab(
     regions_data, filtered_data, energy_type, start_date, end_date
@@ -135,13 +79,17 @@ def display_energy_overview_tab(
                 label_visibility="hidden",
             )
 
-    # Removing columns ending with '_millions' and displaying the table
-    cols_to_drop = [col for col in regions_data.columns if col.endswith("_millions")]
-    st.write("Region's stats :")
+   
+    st.subheader("Region's stats ranked by volume sold:")
     st.dataframe(format_dataframe(regions_data), height=463, use_container_width=True)
 
-    st.write("")
+    st.write("---")
     st.markdown(ALL_ENERGY_TAB_EXPLANATION)
+
+
+# -----------------------------------------------
+# --         ENERGY SPECIFIC TYPE DISPLAY      --
+# -----------------------------------------------
 
 
 def display_specific_energy_tab(
@@ -189,37 +137,21 @@ def display_specific_energy_tab(
         st.plotly_chart(fig, use_container_width=True)
 
     with col4:
-        st.write("Region's stats :")
+        st.subheader(f"Region's stats ranked by {energy_type} volume:")
 
         cols_to_drop = [
             col for col in regions_data.columns if col.endswith("_millions")
         ]
-        energy_cols = ["region", "total_volume"] + [
+        energy_cols = ["region"] + [
             col
             for col in regions_data.drop(cols_to_drop, axis=1)
             if col.startswith(energy_type)
-        ]
-        st.dataframe(regions_data.drop(cols_to_drop, axis=1)[energy_cols], height=458)
+        ] + ["total_volume"]
+        regions_data = regions_data.drop(cols_to_drop, axis=1)[energy_cols]
+        regions_data = regions_data.sort_values(by=f'{energy_type}_total_volume', ascending=False).reset_index(drop=True)
+        st.dataframe(regions_data, height=458)
     st.write('---')
     st.write(SPECIFIC_ENERGY_TAB_EXPLANATION.replace("[Energy Type]", energy_type))
-
-
-def adjust_selectbox_position():
-    """Adjusts the positioning of the selectbox by applying custom CSS."""
-    st.markdown(
-        """
-        <style>
-        [data-baseweb="select"] {
-            margin-top: -70px;
-        }
-        .leaflet-bottom {
-            display: none;
-            visibility: hidden !important;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
 
 
 def main():
@@ -228,7 +160,7 @@ def main():
     """
     st.set_page_config(
         layout="wide",
-        page_title="Renewable Electricity App",
+        page_title="Renewable Electricity Dashboard",
         page_icon="🌎",
     )
     adjust_selectbox_position()
@@ -252,12 +184,16 @@ def main():
         ["All Energy Types", "Onshore Wind", "Hydropower", "Solar", "Geothermal"],
         label_visibility="hidden",
     )
+
+    # All Energy Tab
     if selected_energy_type == "All Energy Types":
         st.write('---')
         st.title("All Energy Types: Onshore Wind, Hydropower, Solar, and Geothermal")
         display_energy_overview_tab(
             regions_data, filtered_data, "All Renewables", start_date, end_date
         )
+
+    # Energy Specific tab
     else:
         st.write('---')
         st.title('Selected Energy Type : ' + selected_energy_type)
@@ -276,6 +212,8 @@ def main():
             key=selected_energy_type,
         )
     adjust_selectbox_position()
+    st.subheader('Author : Corentin PRADIE')
+    st.subheader('Github : [CorentinPRADIE](https://github.com/CorentinPRADIE)')
 
 
 if __name__ == "__main__":

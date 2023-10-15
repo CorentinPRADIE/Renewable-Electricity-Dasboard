@@ -1,7 +1,7 @@
 import streamlit as st
 
 WELCOME_MESSAGE = """
-        # Welcome to the Renewable Electricity App 🌎
+        # Welcome to the Renewable Electricity Dashboard 🌎
 
         Immerse yourself in a detailed exploration of renewable electricity production across France, 
         focusing on four predominant energy types: Onshore Wind, Hydropower, Solar, and Geothermal. 

@@ -160,14 +160,18 @@ def create_energy_bar_chart(df, energy_type, time_interval):
     # Ensure DataFrame has a single unique energy type.
     if df["energy_type"].nunique() != 1:
         raise ValueError("DataFrame should have only one unique value in 'energy_type'")
-    
+
     df["date"] = pd.to_datetime(df["date"])
-    grouped_df = df.groupby(["date", "energy_type"], as_index=False)["total_volume_sold"].sum()
+    grouped_df = df.groupby(["date", "energy_type"], as_index=False)[
+        "total_volume_sold"
+    ].sum()
 
     if time_interval == "Yearly":
         # Extract the year directly from the "date" and group by it.
         grouped_df["year"] = grouped_df["date"].dt.year
-        grouped_df = grouped_df.groupby("year", as_index=False)["total_volume_sold"].sum()
+        grouped_df = grouped_df.groupby("year", as_index=False)[
+            "total_volume_sold"
+        ].sum()
         x_col = "year"
     else:
         x_col = "date"

@@ -86,3 +86,65 @@ def compute_regional_energy_statistics(filtered_df):
         regions_df = pd.merge(regions_df, grouped_df, on="region", how="left")
 
     return regions_df
+
+
+
+def format_volume(number):
+    """
+    Format the volume numbers to a readable format using 'k' for thousands and 'M' for millions.
+    Appends the Euro symbol at the end.
+
+    Args:
+    number (float or int): The number to format
+
+    Returns:
+    str: The formatted string
+    """
+    if abs(number) >= 1_000_000:  # Check for millions
+        return f"{number/1_000_000:.2f} M€"
+    elif abs(number) >= 1_000:  # Check for thousands
+        return f"{number/1_000:.2f} k€"
+    else:
+        return f"{number:.2f}€"
+
+
+def format_dataframe(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Format the dataframe columns: append a Euro sign for columns ending with "volume"
+    and a percentage sign for columns ending with "percentage".
+
+    Args:
+    df (pd.DataFrame): The input DataFrame
+
+    Returns:
+    pd.DataFrame: The formatted DataFrame
+    """
+    formatted_df = df.copy()
+
+    # Drop columns ending with "_millions"
+    cols_to_drop = [col for col in df.columns if col.endswith("_millions")]
+    formatted_df = formatted_df.drop(cols_to_drop, axis=1)
+
+    # Sort by total_volume
+    formatted_df = formatted_df.sort_values(
+        by="total_volume", ascending=False
+    ).reset_index(drop=True)
+
+    # Iterate through each column in the dataframe
+    for col in formatted_df.columns:
+        if col.endswith("_total_volume") or col == "total_volume":
+            # If column ends with "_total_volume" or is "total_volume", apply the format_volume function
+            formatted_df[col] = formatted_df[col].apply(format_volume)
+            # Rename the column to remove the suffix
+            formatted_df.rename(
+                columns={col: col.replace("_total_volume", "")}, inplace=True
+            )
+        elif col.endswith("_percentage"):
+            # If column ends with "_percentage", append percentage sign to each value
+            formatted_df[col] = formatted_df[col].apply(lambda x: f"{x:.2f}%")
+            # Rename the column to replace the suffix with ' %'
+            formatted_df.rename(
+                columns={col: col.replace("_percentage", " %")}, inplace=True
+            )
+
+    return formatted_df
