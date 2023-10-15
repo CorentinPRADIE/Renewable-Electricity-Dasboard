@@ -1,6 +1,6 @@
 # Renewable Electricity Dashboard
 
-Immerse yourself in an interactive exploration of renewable electricity production in France through this app. Dive into the visual explorations [here](https://pradie-corentin-renewable-electricity-app.streamlit.app/).
+Immerse yourself in an interactive exploration of renewable electricity production in France through this app. Dive into the visual explorations [here](https://pradie-corentin-renewable-electricity-dasboard.streamlit.app/).
 
 ## Introduction
 
