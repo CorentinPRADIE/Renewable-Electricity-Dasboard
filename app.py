@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from PIL import Image
 
 # From app_modules/charts.py
 from app_modules.charts import (
@@ -22,6 +23,8 @@ from app_modules.filter import (
     compute_regional_energy_statistics,
     format_dataframe
 )
+
+from app_modules.colors import ENERGY_TYPE_EMOJI
 
 # From app_modules/explanation.py
 from app_modules.explanation import (
@@ -153,6 +156,12 @@ def display_specific_energy_tab(
     st.write('---')
     st.write(SPECIFIC_ENERGY_TAB_EXPLANATION.replace("[Energy Type]", energy_type))
 
+@st.cache_data
+def load_data():
+    dataset = pd.read_csv("data/France_Region_Auction_Data.csv")
+    dataset["date"] = pd.to_datetime(dataset["date"], format="%Y-%m")
+    return dataset
+
 
 def main():
     """
@@ -166,9 +175,8 @@ def main():
     adjust_selectbox_position()
     st.markdown(WELCOME_MESSAGE)
 
-    # Loading and formatting the data
-    dataset = pd.read_csv("data/France_Region_Auction_Data.csv")
-    dataset["date"] = pd.to_datetime(dataset["date"], format="%Y-%m")
+    # Loading data
+    dataset = load_data()
 
     # Displaying sidebar and filtering data based on user selection
     start_date, end_date = display_date_filter_sidebar(dataset)
@@ -196,7 +204,7 @@ def main():
     # Energy Specific tab
     else:
         st.write('---')
-        st.title('Selected Energy Type : ' + selected_energy_type)
+        st.title('Selected Energy Type : ' + selected_energy_type + ENERGY_TYPE_EMOJI[selected_energy_type])
         st.write("")
         st.write("")
         st.write("")
@@ -212,8 +220,17 @@ def main():
             key=selected_energy_type,
         )
     adjust_selectbox_position()
-    st.subheader('Author : Corentin PRADIE')
-    st.subheader('Github : [CorentinPRADIE](https://github.com/CorentinPRADIE)')
+    st.write('---')
+    sub_col1, sub_col2 = st.columns([.7, .3])
+    with sub_col1:
+        st.subheader('Author : [Corentin PRADIE](https://www.linkedin.com/in/corentin-pradie/)')
+        st.subheader('Github : [CorentinPRADIE](https://github.com/CorentinPRADIE)')
+        st.subheader('#datavz2023efrei')
+        st.subheader('Coordinator : [Mano Joseph MATHEW](https://www.linkedin.com/in/manomathew/)')
+
+    with sub_col2:
+        image = Image.open('img/Efrei-logo.jpeg')
+        st.image(image)
 
 
 if __name__ == "__main__":

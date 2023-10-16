@@ -20,3 +20,11 @@ ENERGY_TYPE_COLOR_GRADIENTS = {
     "Solar": "YlOrRd",  # A yellow to red gradient representing Solar
     "Geothermal": "Reds",  # A red gradient representing Geothermal
 }
+
+ENERGY_TYPE_EMOJI = {
+    "All Renewables": "🌎",  
+    "Onshore Wind": "💨",  
+    "Hydropower": "💧",  
+    "Solar": "☀️",  
+    "Geothermal": "🌡️",  
+}
